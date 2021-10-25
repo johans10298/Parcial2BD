@@ -197,3 +197,15 @@ def lambda_handler(event, context):
     client.start_query_execution(QueryString = sql, 
                                  QueryExecutionContext = context,
                                  ResultConfiguration = config)
+   
+    config = {
+        'OutputLocation': 's3://' + bucket_name +'/Headlines/news/periodico=El Espectador/year=2021/month=10/',
+        'EncryptionConfiguration': {'EncryptionOption': 'SSE_S3'}
+    }
+    # Query Execution Parameters
+    sql = 'MSCK REPAIR TABLE news1'
+    context = {'Database': 'parcial'}
+
+    client.start_query_execution(QueryString = sql, 
+                                 QueryExecutionContext = context,
+                                 ResultConfiguration = config)
