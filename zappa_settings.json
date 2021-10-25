@@ -1,0 +1,30 @@
+{
+    "parcial": {
+        "app_function": "app.handler",
+	    "aws_region": "us-east-1",
+        "profile_name": "default",
+        "project_name": "parcial",
+        "runtime": "python3.8",
+        "arn":  "arn:aws:s3:::parcial2-1",
+        "s3_bucket": "parcial-2",
+	"keep_warm":false,
+	"apigateway_enabled":false,
+    "events": [{
+        "function": "app.scrap",
+        "event_source": {
+              "arn":  "arn:aws:s3:::parcial2-1",
+              "events": [
+                "s3:ObjectCreated:*"              ]
+           }
+        },{
+            "function": "app.lambda_handler",
+            "event_source": {
+                  "arn":  "arn:aws:s3:::parcial2-2",
+                  "events": [
+                    "s3:ObjectCreated:*"              ]
+               }
+            }
+    ]
+    
+    }
+}
