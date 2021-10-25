@@ -141,31 +141,26 @@ def scrap(event,context):
         print(i)
 
     cat = []
+    cont = 0
+    var = ''
+    #for i in cat:
+     #print(i)
+
     for i in array:
-        if i.find('mundo') > 0:
-            cat.append('mundo')
-        elif i.find('economia')  > 0 :
-            cat.append('economia')
-        elif i.find('el-magazin-cultural') > 0 :
-            cat.append('el-magazin-cultural')
-        elif i.find('entretenimiento') > 0 :
-            cat.append('entretenimiento')
-        elif i.find('opinion') > 0 :
-            cat.append('opinion')
-        elif i.find('colombia') > 0 :
-            cat.append('colombia')
-        elif i.find('salud') > 0 :
-            cat.append('salud')
-        elif i.find('contenido-patrocinado') > 0:
-            cat.append('contenido-patrocinado')
-        elif i.find('judicial') > 0:
-            cat.append('judicial')
-        elif i.find('bogota') > 0:
-            cat.append('bogota')
-        elif i.find('ciencia') > 0:
-            cat.append('ciencia')
-        elif i.find('ambiente') > 0:
-            cat.append('ambiente')
+        for j in i:
+            if j == '/':
+                cont +=1
+            if cont == 3 and j != '/':
+                var = var+j
+            elif cont == 4:
+                cat.append(var)
+                cont = 0
+                var = ''
+                break
+
+
+    for i in cat:
+        print(i)
 
     for i in cat:
         print(i)
@@ -189,10 +184,10 @@ def scrap(event,context):
     s3.upload_file("/tmp/espectador.csv","parcial2-2",url12)
 
 def lambda_handler(event, context):
-    bucket_name = 'parcial-2'
+    bucket_name = 'parcial2-2'
     client = boto3.client('athena')
     config = {
-        'OutputLocation': 's3://' + bucket_name + '/',
+        'OutputLocation': 's3://' + bucket_name +'/Headlines/news/periodico=El Tiempo/year=2021/month=10/',
         'EncryptionConfiguration': {'EncryptionOption': 'SSE_S3'}
     }
     # Query Execution Parameters
